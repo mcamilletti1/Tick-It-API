@@ -16,6 +16,7 @@ class Event(models.Model):
     artist = models.CharField(max_length=100)
     date = models.CharField(max_length=100)
     time = models.CharField(max_length=100)
+    type = models.CharField(max_length=100, default="Live Music")
 
     def __str__(self):
         return self.artist
