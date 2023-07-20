@@ -36,10 +36,6 @@ class VenueSerializer(serializers.HyperlinkedModelSerializer):
 
 
 class CommentSerializer(serializers.HyperlinkedModelSerializer):
-    event = serializers.HyperlinkedRelatedField(
-        view_name='event_detail',
-        read_only=True
-    )
 
     event_id = serializers.PrimaryKeyRelatedField(
         queryset=Event.objects.all(),
