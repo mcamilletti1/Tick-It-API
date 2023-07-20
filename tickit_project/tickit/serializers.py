@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from .models import *
 
+
 class EventSerializer(serializers.HyperlinkedModelSerializer):
     venue = serializers.HyperlinkedRelatedField(
         view_name='venue_detail',
@@ -14,7 +15,9 @@ class EventSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = Event
-        fields = ('id', 'venue', 'venue_id', 'name', 'date', 'time', 'type', 'photo_url')
+        fields = ('id', 'venue', 'venue_id', 'name',
+                  'date', 'time', 'type', 'photo_url')
+
 
 class VenueSerializer(serializers.HyperlinkedModelSerializer):
     events = EventSerializer(
@@ -28,6 +31,21 @@ class VenueSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = Venue
-        fields = ('id', 'venue_url', 'name', 'city', 'address', 'events', 'photo_url')
+        fields = ('id', 'venue_url', 'name', 'city',
+                  'address', 'events', 'photo_url')
 
 
+class CommentSerializer(serializers.HyperlinkedModelSerializer):
+    event = serializers.HyperlinkedRelatedField(
+        view_name='event_detail',
+        read_only=True
+    )
+
+    event_id = serializers.PrimaryKeyRelatedField(
+        queryset=Event.objects.all(),
+        source='event'
+    )
+
+    class Meta:
+        model = Comment
+        fields = ('name', 'comment', 'event_id')
