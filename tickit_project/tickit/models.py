@@ -23,6 +23,9 @@ class Event(models.Model):
     type = models.CharField(max_length=100, default="Event")
     photo_url = models.TextField(
         default="https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/1024px-No_image_available.svg.png")
+    
+    def venue_name(self):
+        return self.venue.name
 
     def __str__(self):
         return self.name

@@ -13,10 +13,11 @@ class EventSerializer(serializers.HyperlinkedModelSerializer):
         source='venue'
     )
 
+
     class Meta:
         model = Event
         fields = ('id', 'venue', 'venue_id', 'name',
-                  'date', 'time', 'type', 'photo_url')
+                  'date', 'time', 'type', 'photo_url', 'venue_name')
 
 
 class VenueSerializer(serializers.HyperlinkedModelSerializer):
