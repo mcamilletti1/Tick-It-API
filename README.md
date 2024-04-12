@@ -1,106 +1,106 @@
 TickItGuru API Documentation
-Welcome to the official API documentation for TickItGuru, your premier service for discovering and purchasing tickets for a wide array of events including concerts, sports events, theater productions, and more. Below you will find detailed instructions on how to effectively utilize the API to enhance your application or service with live event ticketing functionality.
+TickItGuru provides a robust platform for purchasing tickets to concerts, sporting events, plays, and other live entertainment options. This API allows you to integrate TickItGuru's services with your applications.
 
-API Base URL
-All API requests should be made to the following base URL:
+Base URL
+All API requests should be directed to the following base URL:
 
-arduino
+plaintext
 Copy code
 https://tick-it-api-production.up.railway.app/
-This base URL serves as the entry point for all API endpoints described below.
-
 Authentication
-Some endpoints require authentication. Ensure to include your API key in the header of such requests:
+Access to the API requires an API key. Include your API key in the request header:
 
-css
+markdown
 Copy code
-Authorization: Bearer {YOUR_API_KEY}
-Replace {YOUR_API_KEY} with your actual API key provided upon your API account setup.
+Authorization: Bearer YOUR_API_KEY
+Replace YOUR_API_KEY with your personal API key.
 
-API Endpoints
-Below are the various endpoints available, detailed with required parameters and sample requests and responses:
-
+API Endpoints Overview
 Venues
-List All Venues
-Endpoint: GET /venues
-Description: Retrieve a list of all venues.
-Sample Request:
+List Venues
+
+GET /venues
+Retrieves a list of all venues.
+Example Request:
 bash
 Copy code
-curl -X GET https://tick-it-api-production.up.railway.app/venues
-Sample Response:
-json
-Copy code
-[
-    {
-        "id": 4,
-        "venue_url": "https://tick-it-api-production.up.railway.app/venues/4",
-        "name": "Al HirschField Theatre",
-        "city": "New York, NY",
-        "address": "302 West 45th Street New York, NY 10036",
-        "photo_url": "https://imaging.broadway.com/images/widescreen-169/w358/h201/124943-3.jpg"
-    },
-    {
-        "id": 5,
-        "venue_url": "https://tick-it-api-production.up.railway.app/venues/5",
-        "name": "Ambassador Theatre",
-        "city": "New York, NY",
-        "address": "219 West 49th Street New York, NY 10019",
-        "photo_url": "https://imaging.broadway.com/images/widescreen-169/w358/h201/124945-3.jpg"
-    }
-]
-Get Venue Details
-Endpoint: GET /venues/{venue_id}
-Description: Fetch detailed information about a specific venue, including upcoming events hosted at the venue.
-Sample Request:
+curl -X GET https://tick-it-api-production.up.railway.app/venues -H "Authorization: Bearer YOUR_API_KEY"
+Venue Details
+
+GET /venues/{id}
+Provides detailed information about a specific venue, including related events.
+Example Request:
 bash
 Copy code
-curl -X GET https://tick-it-api-production.up.railway.app/venues/4
-Sample Response:
+curl -X GET https://tick-it-api-production.up.railway.app/venues/4 -H "Authorization: Bearer YOUR_API_KEY"
+Events
+List Events
+
+GET /events
+Retrieves a list of all events, filterable by type, date, or venue.
+Example Request:
+bash
+Copy code
+curl -X GET https://tick-it-api-production.up.railway.app/events -H "Authorization: Bearer YOUR_API_KEY"
+Event Details
+
+GET /events/{id}
+Provides detailed information about a specific event.
+Example Request:
+bash
+Copy code
+curl -X GET https://tick-it-api-production.up.railway.app/events/1 -H "Authorization: Bearer YOUR_API_KEY"
+Comments
+List Comments
+
+GET /comments
+Retrieves comments related to events.
+Example Request:
+bash
+Copy code
+curl -X GET https://tick-it-api-production.up.railway.app/comments -H "Authorization: Bearer YOUR_API_KEY"
+Post Comment
+
+POST /comments
+Posts a comment to a specific event.
+Example Request:
+bash
+Copy code
+curl -X POST https://tick-it-api-production.up.railway.app/comments -H "Content-Type: application/json" -H "Authorization: Bearer YOUR_API_KEY" -d '{"name": "John Doe", "comment": "Great event!", "event_id": 1}'
+Filters
+Search and order functionalities are available on list endpoints to filter results based on specific fields. For example, you can filter events by type or search venues by city.
+
+Error Handling
+TickItGuru uses standard HTTP response codes to indicate the success or failure of requests:
+
+200 OK - The request was successful.
+400 Bad Request - The request could not be understood by the server.
+401 Unauthorized - Authentication failed or user does not have permissions for the action.
+404 Not Found - The requested resource was not found.
+500 Internal Server Error - A generic error occurred on the server.
+Response Example
+Here is what a response might look like for a venue listing request:
+
 json
 Copy code
 {
     "id": 4,
     "venue_url": "https://tick-it-api-production.up.railway.app/venues/4",
-    "name": "Al HirschField Theatre",
+    "name": "Al Hirschfield Theatre",
     "city": "New York, NY",
     "address": "302 West 45th Street New York, NY 10036",
     "events": [
         {
             "id": 4,
-            "venue": "https://tick-it-api-production.up.railway.app/venues/4",
-            "venue_id": 4,
             "name": "Moulin Rouge",
             "date": "July 22, 2023",
             "time": "8:00 PM",
             "type": "Theatre",
-            "photo_url": "https://imaging.broadway.com/images/poster-178275/w230/222222/120038-1.jpg",
-            "venue_name": "Al HirschField Theatre"
+            "photo_url": "https://example.com/path/to/image.jpg",
+            "venue_name": "Al Hirschfield Theatre"
         }
-        // More events...
     ],
-    "photo_url": "https://imaging.broadway.com/images/widescreen-169/w358/h201/124943-3.jpg"
+    "photo_url": "https://example.com/path/to/venue/image.jpg"
 }
-Events
-List All Events
-Endpoint: GET /events
-Description: Retrieve a list of all events, optionally filterable by type (e.g., "concert", "sport", "theatre").
-Parameters:
-type: Filter events by type. Example: type=theatre
-Sample Request:
-bash
-Copy code
-curl -X GET https://tick-it-api-production.up.railway.app/events?type=theatre
-Sample Response:
-json
-Copy code
-[
-    {
-        "id": 4,
-        "venue": "https://tick-it-api-production.up.railway.app/venues/4",
-        "venue_id": 4,
-        "name": "Moulin Rouge",
-        "date": "July 22, 2023",
-        "time": "8:00 PM",
-        "type": "Theatre",
-        "photo_url": "https://imaging.broadway.com/images/poster-178275/w230/222222
+Conclusion
+This API documentation should provide all the necessary details to get started with integrating TickItGuru's ticketing services into your application. For further assistance or to request additional features, please contact our support team.
