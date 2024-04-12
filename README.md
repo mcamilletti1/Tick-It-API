@@ -78,7 +78,6 @@ GET /venues/4
             "photo_url": "https://imaging.broadway.com/images/poster-178275/w230/222222/120038-1.jpg",
             "venue_name": "Al HirschField Theatre"
         }
-        // More events...
     ],
     "photo_url": "https://imaging.broadway.com/images/widescreen-169/w358/h201/124943-3.jpg"
 }
