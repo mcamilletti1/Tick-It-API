@@ -26,6 +26,7 @@ GET /venues
 
 Sample Response:
 
+```json
 [
     {
         "id": 4,
@@ -57,6 +58,7 @@ Sample Request:
 
 GET /venues/4
 
+```json
 {
     "id": 4,
     "venue_url": "https://tick-it-api-production.up.railway.app/venues/4",
@@ -94,6 +96,7 @@ GET /events?type=theatre
 
 Sample Response:
 
+```json
 [
     {
         "id": 4,
